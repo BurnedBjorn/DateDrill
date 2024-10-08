@@ -144,7 +144,7 @@ ostream& operator<<(ostream& os,Date& Date) {
     return os << Date.day() << ", " << Date.month() << ", " << Date.year();
 }
 void testDateClass() {
-    //Date date{2000, Month::jan, 1 };
+    
     const string valid = ",valid";
     const string invalid = ",invalid";
     char input;
@@ -165,14 +165,20 @@ void testDateClass() {
         }
     }
 }
-void testDay() {
+void testAddDay() {
     Date defDate{ 2000, Month::jan, 1 };
+    int length = 0;
+    cin >> length;
+    for (int i = 0; i < length; i++)
+    {
+        defDate.add_day(i);
+        cout << defDate << endl;
+    }
 }
 
 int main()
 {
-    Month m{1};
-    testDateClass();
+    testAddDay();
     
     
 
