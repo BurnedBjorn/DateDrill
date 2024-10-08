@@ -32,19 +32,27 @@ public:
     int day() const { return d; }
     Month month() const { return m; }
     int year() const { return y; }
+    bool IsLeapYear() {
+        if (y % 4) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
 private:
     int d,y;
     Month m;
 };
 bool Date::is_valid() {
-    bool leapY = (y % 4 == 0);
+    
     if ((d > 31) or (d < 1)) {
         return false;
     }
     switch (m)
     {
     case Month::feb:
-        if (not leapY) {
+        if (!IsLeapYear()) {
             if (d < 28) { return false; }
         }
         else {
@@ -112,13 +120,27 @@ void Date::add_day(int n) {
             break;
 
         case Month::feb:
-            if (d > 28)
-            {
-                d -= 28;
-                ++m;
+            if(IsLeapYear){
+                if (d > 29)
+                {
+                    d -= 29;
+                    ++m;
+                }
+                else {
+                    return;
+                }
+                
             }
-            else {
-                return;
+            else{
+                if (d > 28)
+                {
+                    d -= 28;
+                    ++m;
+                }
+                else {
+                    return;
+                }
+                
             }
             break;
         case Month::dec:
@@ -168,10 +190,12 @@ void testDateClass() {
 void testAddDay() {
     Date defDate{ 2000, Month::jan, 1 };
     int length = 0;
+    cout << "input how many adds to run test:\n>";
     cin >> length;
     for (int i = 0; i < length; i++)
     {
-        defDate.add_day(i);
+        cout << "add" << i << endl;
+        defDate.add_day(-i);
         cout << defDate << endl;
     }
 }
